@@ -2,6 +2,7 @@ package SankaSkepp;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Skepp{
@@ -11,23 +12,21 @@ public class Skepp{
 	 */
 	public String namn;
 	public int storlek;
-	static LinkedList<Skepp> skeppar = new LinkedList<Skepp>();
-	LinkedList<Koordinater> skeppKoordinater = new LinkedList<Koordinater>();
-	LinkedList<Koordinater> båtKoordinater = new LinkedList<Koordinater>();
+	//LinkedList<Skepp> skeppar = new LinkedList<Skepp>();
+	List<Koordinater> båtKoordinater;
 
-	public Skepp(int storlek, String namn, LinkedList<Koordinater> båtKoordinater) {
+	public Skepp(int storlek, String namn, List<Koordinater> båtKoordinater2) {
 		this.storlek = storlek;
 		this.namn = namn;
+		this.båtKoordinater = båtKoordinater2;
+	}
+
+	public List<Koordinater> getbåtKoordinater() {
+		return båtKoordinater;
+	}
+
+	public void setbåtKoordinater(List<Koordinater> båtKoordinater) {
 		this.båtKoordinater = båtKoordinater;
-
-	}
-
-	public LinkedList<Koordinater> getSkeppKoordinater() {
-		return skeppKoordinater;
-	}
-
-	public void setSkeppKoordinater(LinkedList<Koordinater> skeppKoordinater) {
-		this.skeppKoordinater = skeppKoordinater;
 	}
 
 	public int getStorlek() {
@@ -47,18 +46,18 @@ public class Skepp{
 	}
 
 
-	public static void addSkepp(Skepp c) {
+	/*public void addSkepp(Skepp c) {
 		skeppar.add(c);
 	}
 	/*public static void addKoordinat(String c) {
 		koordinater.add(c);
 	}*/
 
-	public static void printSkepp() {
+	/*public void printSkepp() {
 		for (Skepp obj : skeppar) {
 			System.out.println(obj);
 		}
-	}
+	}*/
 	
 	/*public static void printKoordinat() {
 		for (String obj : koordinater) {
@@ -67,7 +66,12 @@ public class Skepp{
 	}*/
 
 	public String toString() {
-		return ("Namn:" + this.namn + " Storlek: " + this.storlek + "\n");
+		if(this.båtKoordinater==null) {
+			return ("Namn:" + this.namn + " Storlek: " + this.storlek + "\n");
+		}
+		else {
+			return this.båtKoordinater.toString();
+		}
 	}
 	
 	/*public void skapaSkepp(Skepp skepp) {
@@ -79,7 +83,7 @@ public class Skepp{
 		int storlek = scan.nextInt();
 		skepp.setStorlek(storlek);
 	}*/
-	
+/*	
 	public void placeraSkepp(Skepp c, boolean val) {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Nu ska du placera dina skepp. Välj koordinater a-j och sedan position 0-9! ");
@@ -119,7 +123,7 @@ public class Skepp{
 		return true;
 		
 	}
-
+*/
 	/*public String[] addaFlotta() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Nu ska du lägga till pjäser i flottan!");

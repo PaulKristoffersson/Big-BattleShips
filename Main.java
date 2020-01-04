@@ -12,10 +12,12 @@ public class Main {
 	
 
 	public static void main(String[] args) {
+		LinkedList<Skepp> skeppar=null;
 		int storlek = 0;
 		String namn = null;
 	//	Skepp skepp = new Skepp(storlek, namn);
 		Spelare spelare = new Spelare(storlek, namn);
+		Spelare spelare2 = spelare;
 		int result = 0;
 		while (!(result == -1)) {
 			printMenu();
@@ -66,17 +68,21 @@ public class Main {
 	
 	public static void spelaSpel() {
 		int nummer = 1;
-		int liv = 0;
 		String namn = null;
-		Spelare spelare1 = new Spelare(liv, namn);
+		Spelare spelare1 = new Spelare(nummer,namn);
+		Spelare spelare2 = new Spelare(nummer, namn);
+		System.out.println("Skapa spelets båtar, max storleken är 10");
+		spelare1.skapaSkepp();
+		spelare2.kopieraSkepp2(spelare1.kopieraSkepp());
 		spelare1.setLiv(spelare1.spelareLiv());
+		System.out.println(spelare1.getLiv()+"hejeharhashrhash");
 		spelare1.setNamn(spelare1.skapaNamn(nummer));
 		nummer++;
-		Spelare spelare2 = new Spelare(liv, namn);
 		spelare2.setLiv(spelare2.spelareLiv());
 		spelare2.setNamn(spelare2.skapaNamn(nummer));
 		spelare1.newBoard();
 		spelare1.newEnemyBoard();
+		System.out.println("hej");
 		spelare1.printSkepp();
 		System.out.println("Nu ska "+ spelare1.getNamn() + " placera sina båtar");
 		System.out.println(spelare1.getLiv());
@@ -100,7 +106,7 @@ public class Main {
 
 			System.out.println("Det är " + spelare2.getNamn() +" tur att skjuta");
 			x = spelare1.skjutKoordinat();
-			spelare1.setLiv(spelare1.getLiv()-1);
+			spelare1.setLiv(spelare1.getLiv()-x);
 			System.out.println("\n");
 			spelare2.printBoard();
 		}
