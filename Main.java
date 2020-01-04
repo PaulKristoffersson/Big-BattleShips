@@ -75,40 +75,46 @@ public class Main {
 		spelare1.skapaSkepp();
 		spelare2.kopieraSkepp2(spelare1.kopieraSkepp());
 		spelare1.setLiv(spelare1.spelareLiv());
-		System.out.println(spelare1.getLiv()+"hejeharhashrhash");
 		spelare1.setNamn(spelare1.skapaNamn(nummer));
 		nummer++;
 		spelare2.setLiv(spelare2.spelareLiv());
 		spelare2.setNamn(spelare2.skapaNamn(nummer));
 		spelare1.newBoard();
 		spelare1.newEnemyBoard();
-		System.out.println("hej");
-		spelare1.printSkepp();
+		
 		System.out.println("Nu ska "+ spelare1.getNamn() + " placera sina båtar");
-		System.out.println(spelare1.getLiv());
 		spelare1.placeraSkepp();
-		spelare1.printSkepp();
 				
 		spelare2.newBoard();
 		spelare2.newEnemyBoard();
 		System.out.println("Nu ska " + spelare2.getNamn()+ " placera sina båtar");
 		spelare2.placeraSkepp();
 		
-		while (spelare1.getLiv()!=0 && spelare2.getLiv()!=0){
+		System.out.println("LIIIIIV" + spelare1.getLiv() + "Spelare 2liiiiiiiiv" + spelare2.getLiv());
+		
+		
+		
+		while ((spelare1.getLiv()!=0) && (spelare2.getLiv() !=0)){
 			int x = 0;
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			System.out.println("Det är " + spelare1.getNamn() +  " tur att skjuta");
+			System.out.println(spelare1.getNamn() + "s bräde! ");
+			spelare1.printBoard();
+			spelare2.printEnemyBoard();
 			x = spelare2.skjutKoordinat();
-			System.out.println(x);
 			spelare2.setLiv(spelare2.getLiv()-x);
 			System.out.println("\n");
-			System.out.println(spelare2.getLiv());
-			spelare1.printBoard();
-
+			
+			System.out.println("\n\n\n\n\n\n\n\n\n\\n\n\n\n");
 			System.out.println("Det är " + spelare2.getNamn() +" tur att skjuta");
+			System.out.println(spelare2.getNamn() + "s bräde! ");
+			spelare2.printBoard();
+			spelare1.printEnemyBoard();
 			x = spelare1.skjutKoordinat();
 			spelare1.setLiv(spelare1.getLiv()-x);
 			System.out.println("\n");
-			spelare2.printBoard();
+			
+			System.out.println("Spealare 1 liv = " + spelare1.getLiv() + "Spelare 2 liv = " + spelare2.getLiv());
 		}
 		
 	}
