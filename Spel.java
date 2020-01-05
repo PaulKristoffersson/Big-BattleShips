@@ -17,10 +17,10 @@ public class Spel {
 		System.out.println("Hur många spelare vill du ha?");
 		int antalSpelare = scan.nextInt();
 		if (antalSpelare == 0) {
-			spelaSpelEvE();
+			spelaSpelEvE(antalSpelare);
 		}
 		if (antalSpelare == 1) {
-			spelaSpelPvE();
+			spelaSpelPvE(antalSpelare);
 		}
 		if (antalSpelare > 1) {
 			spelaSpel(antalSpelare);
@@ -95,94 +95,146 @@ public class Spel {
 	}
 	
 
-	public  void spelaSpelPvE() {
-		int nummer = 1;
-		int liv = 0;
-		System.out.println("Skapa spelets båtar, max storleken är 10");
-		spelare1.skapaSkepp();
-		spelare2.kopieraSkepp2(spelare1.kopieraSkepp());
-		spelare1.setLiv(spelare1.spelareLiv());
-		spelare1.setNamn(spelare1.skapaNamn(nummer));
-		nummer++;
-		spelare2.setLiv(spelare2.spelareLiv());
-		spelare2.setNamn("COM1");
-		spelare1.newBoard();
-		spelare1.newEnemyBoard();
+	public  void spelaSpelPvE(int antalSpelare) {
+		nySpelare(antalSpelare);
+		int botAntal = nyBot();
+		antalSpelare = antalSpelare + botAntal;
+		boolean c = false;
+		int i = 0;
+		int skepp2 = 1;
+		while (c == false) {
+			for (i = 0; i < antalSpelare; i++) {
+				int x = 0;
+				
+				if (i == antalSpelare) {	
+					i = 0;
+				}
+				if (skepp2 == (antalSpelare)) {
+					skepp2 = 0;
+				}
+				if (i==0) {
+					System.out.println("Det är " + spelarLista.get(i).getNamn() + " tur att skjuta");
+					System.out.println(spelarLista.get(i).getNamn() + "s bräde! ");
 
-		// spelare 1
-		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina båtar");
-		spelare1.placeraSkepp();
-		spelare2.newBoard();
-		spelare2.newEnemyBoard();
-		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina båtar");
-		spelare2.placeraSkepp2();
+					spelarLista.get(i).printBoard();
+					spelarLista.get(skepp2).printEnemyBoard();
+					x = spelarLista.get(skepp2).skjutKoordinat();
+					spelarLista.get(skepp2).setLiv(spelarLista.get(skepp2).getLiv() - x);
+					System.out.println("\n");
+					System.out.println(spelarLista.get(skepp2).getLiv());
+				}
+				
+				
+				if (i==1) {
+					System.out.println("Det är " + spelarLista.get(i).getNamn() + " tur att skjuta");
+					System.out.println(spelarLista.get(i).getNamn() + "s bräde! ");
 
-		while ((spelare1.getLiv() != 0) && (spelare2.getLiv() != 0)) {
-			int x = 0;
-			// spelare 1
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			System.out.println("Det är " + spelare1.getNamn() + " tur att skjuta");
-			System.out.println(spelare1.getNamn() + "s bräde! ");
-			spelare1.printBoard();
-			spelare2.printEnemyBoard();
-			x = spelare2.skjutKoordinat();
-			spelare2.setLiv(spelare2.getLiv() - x);
-			System.out.println("\n");
+					spelarLista.get(i).printBoard();
+					spelarLista.get(skepp2).printEnemyBoard();
+					x = spelarLista.get(skepp2).skjutKoordinat2();
+					spelarLista.get(skepp2).setLiv(spelarLista.get(skepp2).getLiv() - x);
+					System.out.println("\n");
+					System.out.println(spelarLista.get(skepp2).getLiv());
+				}		
 
-			// spelare 2
-			System.out.println("\n\n\n\n\n\n\n\n\n\\n\n\n\n");
-			System.out.println("Det är " + spelare2.getNamn() + " tur att skjuta");
-			System.out.println(spelare2.getNamn() + "s bräde!");
-			spelare2.printBoard();
-			spelare1.printEnemyBoard();
-			x = spelare1.skjutKoordinat2();
-			spelare1.setLiv(spelare1.getLiv() - x);
-			System.out.println("\n");
+				if (fleraSpelare(spelarLista.get(skepp2)) == true) {
+					spelarLista.remove(skepp2);
+					antalSpelare--;
+					break;
+				}
 
-			statistik();
-			runda++;
+				skepp2 = skepp2 + 1;
+				continue;
+			}
+
+			System.out.println("Runda avklarad. Här är listan av kvarvarande spelar och deras liv: ");
+			System.out.println(spelarLista);
+			i = 0;
+			skepp2 = 1;
+
+			if (antalSpelare == 1) {
+				System.out.println(spelarLista.get(0).getNamn() + " Är vår vinnare!!!!!!!!");
+				break;
+			}
+
 		}
-
-		highscore();
 	}
 
-	public void spelaSpelEvE() {
+	public void spelaSpelEvE(int antalSpelare) {
 		Scanner scan = new Scanner(System.in);
-		int nummer = 1;
-		int maxrunda = 100;
-		System.out.println("Skapa spelets båtar, max storleken är 10");
-		for (Spelare obj : spelarLista) {
-			
-		
-		while ((spelare1.getLiv() != 0) && (spelare2.getLiv() != 0) && (runda < maxrunda)) {
-			int x = 0;
-			// spelare1
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			System.out.println("Det är " + spelare1.getNamn() + " tur att skjuta");
-			System.out.println(spelare1.getNamn() + "s bräde! ");
-			spelare1.printBoard();
-			spelare2.printEnemyBoard();
-			x = spelare2.skjutKoordinat2();
-			spelare2.setLiv(spelare2.getLiv() - x);
-			System.out.println("\n");
-			// spelare2
-			System.out.println("\n\n\n\n\n\n\n\n\n\\n\n\n\n");
-			System.out.println("Det är " + spelare2.getNamn() + " tur att skjuta");
-			System.out.println(spelare2.getNamn() + "s bräde! ");
-			spelare2.printBoard();
-			spelare1.printEnemyBoard();
-			x = spelare1.skjutKoordinat2();
-			spelare1.setLiv(spelare1.getLiv() - x);
-			System.out.println("\n");
+		int botAntal = nyBot();
+		int botAntal2 = nyBot();
+		botAntal = botAntal + botAntal2;
+		antalSpelare = botAntal;
+		boolean c = false;
+		int i = 0;
+		int skepp2 = 1;
+		int runda = 1;
+		int maxRunda = 100;
+		while ((c == false) && (runda<maxRunda)) {
+			for (i = 0; i < antalSpelare; i++) {
+				int x = 0;
+				
+				if (i == antalSpelare) {	
+					i = 0;
+				}
+				if (skepp2 == (antalSpelare)) {
+					skepp2 = 0;
+				}
+				
+				System.out.println("Det är " + spelarLista.get(i).getNamn() + " tur att skjuta");
+				System.out.println(spelarLista.get(i).getNamn() + "s bräde! ");
 
-			statistik();
-
+				spelarLista.get(i).printBoard();
+				spelarLista.get(skepp2).printEnemyBoard();
+				x = spelarLista.get(skepp2).skjutKoordinat2();
+				spelarLista.get(skepp2).setLiv(spelarLista.get(skepp2).getLiv() - x);
+				System.out.println("\n");
+				System.out.println(spelarLista.get(skepp2).getLiv());
+				if (fleraSpelare(spelarLista.get(skepp2)) == true) {
+					spelarLista.remove(skepp2);
+					antalSpelare--;
+					break;
+				}
+				
+				skepp2 = skepp2 + 1;
+				continue;
+			}
 			runda++;
+			System.out.println("Runda "+ runda+" avklarad. Här är listan av kvarvarande spelar och deras liv: ");
+			System.out.println(spelarLista);
+			i = 0;
+			skepp2 = 1;
+
+			if (antalSpelare == 1) {
+				System.out.println(spelarLista.get(0).getNamn() + " Är vår vinnare!!!!!!!! Det tog " + runda + " rundor!");
+			
+				break;
+			}
+
 		}
+
 	}
+	public int nyBot() {
+		String namn = "COM1";
+		int liv = 0;
+		Spelare spelare = new Spelare(liv, namn);
+		spelare.newBoard();
+		spelare.newEnemyBoard();
+		if (spelarLista.isEmpty()) {
+			spelare.skapaSkepp();
+		}
+		else {
+			for (Spelare obj : spelarLista) {
+				spelare.kopieraSkepp2(obj.kopieraSkepp());
+			}
+		}
 
-		highscore();
-
+		spelarLista.add(spelare);
+		spelare.setLiv(spelare.spelareLiv());
+		spelare.placeraSkepp2();
+		return 1;
+		
 	}
 	
 	public void nySpelare(int spelarNummer) {		
