@@ -6,15 +6,17 @@ import java.io.*;
 
 public class Main {
 	static ArrayList<String> highscore = new ArrayList<String>();
-	static int antalSpelare = 2; // standard tvÂ m‰nnskliga spelare
+	static int antalSpelare = 2; // standard tv√• m√§nnskliga spelare
 	static int runda = 0;
 	static int liv = 0;
 	static String namn = null;
-	static Spelare spelare1 = new Spelare(liv, namn);
-	static Spelare spelare2 = new Spelare(liv, namn);
+	static int tr√§ff = 0;
+	static int totalLiv = 0;
+	static Spelare spelare1 = new Spelare(liv, namn,tr√§ff,totalLiv);
+	static Spelare spelare2 = new Spelare(liv, namn,tr√§ff, totalLiv);
 	public LinkedList<Spelare> spelarLista = new LinkedList<Spelare>();
 
-	// Spelaren anv‰nder som standard 5 skepp - carrier5, battleship4, cruiser3,
+	// Spelaren anv√§nder som standard 5 skepp - carrier5, battleship4, cruiser3,
 	// submarine3, destroyer2
 
 	public static void main(String[] args) {
@@ -30,12 +32,12 @@ public class Main {
 					// spelare.printSkepp();
 					break;
 				case 2:
-					System.out.println("Ange antal m‰nskliga spelare: ");
+					System.out.println("Ange antal m√§nskliga spelare: ");
 					try {
 						Scanner intScan = new Scanner(System.in);
 						antalSpelare = intScan.nextInt();
 						if (antalSpelare > 2) {
-							System.out.println("Kan inte ha fler ‰n 2 spelare");
+							System.out.println("Kan inte ha fler √§n 2 spelare");
 							antalSpelare = 2;
 						} else if (antalSpelare < 0) {
 							System.out.println("Kan inte ha negativt antal");
@@ -96,7 +98,7 @@ public class Main {
 					break;
 
 				default:
-					System.out.println("Ange r‰tt siffra!");
+					System.out.println("Ange r√§tt siffra!");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Ange siffra!");
@@ -110,7 +112,7 @@ public class Main {
 		nySpelare(antalSpelare);
 		int nummer = 1;
 		// int liv = 0;
-		System.out.println("Skapa spelets bÂtar, max storleken ‰r 10");
+		System.out.println("Skapa spelets b√•tar, max storleken √§r 10");
 		spelare1.skapaSkepp();
 		spelare2.kopieraSkepp2(spelare1.kopieraSkepp());
 		spelare1.setLiv(spelare1.spelareLiv());
@@ -121,20 +123,20 @@ public class Main {
 		spelare1.newBoard();
 		spelare1.newEnemyBoard();
 
-		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina bÂtar");
+		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina b√•tar");
 		spelare1.placeraSkepp();
 
 		spelare2.newBoard();
 		spelare2.newEnemyBoard();
-		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina bÂtar");
+		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina b√•tar");
 		spelare2.placeraSkepp();
 
 		while ((spelare1.getLiv() != 0) && (spelare2.getLiv() != 0)) {
 			int x = 0;
 			// spelare 1
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			System.out.println("Det ‰r " + spelare1.getNamn() + " tur att skjuta");
-			System.out.println(spelare1.getNamn() + "s br‰de! ");
+			System.out.println("Det √§r " + spelare1.getNamn() + " tur att skjuta");
+			System.out.println(spelare1.getNamn() + "s br√§de! ");
 			spelare1.printBoard();
 			spelare2.printEnemyBoard();
 			x = spelare2.skjutKoordinat();
@@ -143,8 +145,8 @@ public class Main {
 
 			// spelare 2
 			System.out.println("\n\n\n\n\n\n\n\n\n\\n\n\n\n");
-			System.out.println("Det ‰r " + spelare2.getNamn() + " tur att skjuta");
-			System.out.println(spelare2.getNamn() + "s br‰de! ");
+			System.out.println("Det √§r " + spelare2.getNamn() + " tur att skjuta");
+			System.out.println(spelare2.getNamn() + "s br√§de! ");
 			spelare2.printBoard();
 			spelare1.printEnemyBoard();
 			x = spelare1.skjutKoordinat();
@@ -162,7 +164,7 @@ public class Main {
 	public static void spelaSpelPvE() {
 		int nummer = 1;
 		int liv = 0;
-		System.out.println("Skapa spelets bÂtar, max storleken ‰r 10");
+		System.out.println("Skapa spelets b√•tar, max storleken √§r 10");
 		spelare1.skapaSkepp();
 		spelare2.kopieraSkepp2(spelare1.kopieraSkepp());
 		spelare1.setLiv(spelare1.spelareLiv());
@@ -174,19 +176,19 @@ public class Main {
 		spelare1.newEnemyBoard();
 
 		// spelare 1
-		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina bÂtar");
+		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina b√•tar");
 		spelare1.placeraSkepp();
 		spelare2.newBoard();
 		spelare2.newEnemyBoard();
-		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina bÂtar");
+		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina b√•tar");
 		spelare2.placeraSkepp2();
 
 		while ((spelare1.getLiv() != 0) && (spelare2.getLiv() != 0)) {
 			int x = 0;
 			// spelare 1
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			System.out.println("Det ‰r " + spelare1.getNamn() + " tur att skjuta");
-			System.out.println(spelare1.getNamn() + "s br‰de! ");
+			System.out.println("Det √§r " + spelare1.getNamn() + " tur att skjuta");
+			System.out.println(spelare1.getNamn() + "s br√§de! ");
 			spelare1.printBoard();
 			spelare2.printEnemyBoard();
 			x = spelare2.skjutKoordinat();
@@ -195,8 +197,8 @@ public class Main {
 
 			// spelare 2
 			System.out.println("\n\n\n\n\n\n\n\n\n\\n\n\n\n");
-			System.out.println("Det ‰r " + spelare2.getNamn() + " tur att skjuta");
-			System.out.println(spelare2.getNamn() + "s br‰de!");
+			System.out.println("Det √§r " + spelare2.getNamn() + " tur att skjuta");
+			System.out.println(spelare2.getNamn() + "s br√§de!");
 			spelare2.printBoard();
 			spelare1.printEnemyBoard();
 			x = spelare1.skjutKoordinat2();
@@ -214,7 +216,7 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		int nummer = 1;
 		int maxrunda = 100;
-		System.out.println("Skapa spelets bÂtar, max storleken ‰r 10");
+		System.out.println("Skapa spelets b√•tar, max storleken √§r 10");
 		spelare1.skapaSkepp();
 		spelare2.kopieraSkepp2(spelare1.kopieraSkepp());
 		spelare1.setLiv(spelare1.spelareLiv());
@@ -224,18 +226,18 @@ public class Main {
 		spelare2.setNamn("COM2");
 		spelare1.newBoard();
 		spelare1.newEnemyBoard();
-		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina bÂtar");
+		System.out.println("Nu ska " + spelare1.getNamn() + " placera sina b√•tar");
 		spelare1.placeraSkepp2();
 		spelare2.newBoard();
 		spelare2.newEnemyBoard();
-		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina bÂtar");
+		System.out.println("Nu ska " + spelare2.getNamn() + " placera sina b√•tar");
 		spelare2.placeraSkepp2();
 		while ((spelare1.getLiv() != 0) && (spelare2.getLiv() != 0) && (runda < maxrunda)) {
 			int x = 0;
 			// spelare1
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			System.out.println("Det ‰r " + spelare1.getNamn() + " tur att skjuta");
-			System.out.println(spelare1.getNamn() + "s br‰de! ");
+			System.out.println("Det √§r " + spelare1.getNamn() + " tur att skjuta");
+			System.out.println(spelare1.getNamn() + "s br√§de! ");
 			spelare1.printBoard();
 			spelare2.printEnemyBoard();
 			x = spelare2.skjutKoordinat2();
@@ -243,8 +245,8 @@ public class Main {
 			System.out.println("\n");
 			// spelare2
 			System.out.println("\n\n\n\n\n\n\n\n\n\\n\n\n\n");
-			System.out.println("Det ‰r " + spelare2.getNamn() + " tur att skjuta");
-			System.out.println(spelare2.getNamn() + "s br‰de! ");
+			System.out.println("Det √§r " + spelare2.getNamn() + " tur att skjuta");
+			System.out.println(spelare2.getNamn() + "s br√§de! ");
 			spelare2.printBoard();
 			spelare1.printEnemyBoard();
 			x = spelare1.skjutKoordinat2();
@@ -263,7 +265,7 @@ public class Main {
 	public void nySpelare(int spelarNummer) {		
 		Scanner scan = new Scanner(System.in);
 		for (int i = 1; i<=spelarNummer; i++) {
-			System.out.println("V‰lj namn spelare "+i+"!");
+			System.out.println("V√§lj namn spelare "+i+"!");
 			String namn = scan.nextLine();
 			int liv = 0;
 			Spelare spelare = new Spelare(liv,namn);
@@ -286,13 +288,13 @@ public class Main {
 	private static void printMenu() {
 
 		System.out.println();
-		System.out.println("V‰lkommen till S‰nka Skepp!");
+		System.out.println("V√§lkommen till S√§nka Skepp!");
 		System.out.println("===========================");
 		System.out.println("Skapad av Martin och Paul");
 		System.out.println("===========================");
 		System.out.println("Meny:");
 		System.out.println("1. Lista skepp i flottan");
-		System.out.println("2. ƒndra antal m‰nskliga spelare. Nuvarande: " + antalSpelare);
+		System.out.println("2. √Ñndra antal m√§nskliga spelare. Nuvarande: " + antalSpelare);
 		System.out.println("3. Se highscore");
 		System.out.println("4. Rensa highscore");
 		System.out.println("5. Starta spelet!");
@@ -338,13 +340,13 @@ public class Main {
 		// player1
 		System.out.println();
 		System.out.println(spelare1.getNamn());
-		System.out.println("Tr‰ffs‰kerhet: ");
-		System.out.println("Fˆrlustprocent: ");
+		System.out.println("Tr√§ffs√§kerhet: ");
+		System.out.println("F√∂rlustprocent: ");
 		// player2
 		System.out.println();
 		System.out.println(spelare2.getNamn());
-		System.out.println("Tr‰ffs‰kerhet: " + (runda+1));
-		System.out.println("Fˆrlustprocent: ");
+		System.out.println("Tr√§ffs√§kerhet: " + (runda+1));
+		System.out.println("F√∂rlustprocent: ");
 		System.out.println();
 
 	}

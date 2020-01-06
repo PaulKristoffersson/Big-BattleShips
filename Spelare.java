@@ -12,21 +12,18 @@ import java.util.Scanner;
 public class Spelare {
 	private int lengd = 0;
 	private String namn = null;
-	private int storlek = 10;
-	//private int index = 0;
+	private int träffar = 0;
 	private int liv = 0;
-	//private int spelare1Liv = 0;
-	//private int spelare2Liv = 0;
+	private int totalLiv = 0;
 	
-	List<Koordinater> b�tKoordinater;
-	Skepp skepp = new Skepp(lengd, namn, b�tKoordinater);
+	List<Koordinater> båtKoordinater;
+	Skepp skepp = new Skepp(lengd, namn, båtKoordinater);
 	//Skepp skepp = new Skepp(lengd, namn);
 	List<Skepp> spelarSkepp = new ArrayList<Skepp>();
 	//LinkedList<Koordinater> skeppKoordinater = new LinkedList<Koordinater>();
-	LinkedList<Koordinater> tr�ffadeKoordinater = new LinkedList<Koordinater>();
+	LinkedList<Koordinater> träffadeKoordinater = new LinkedList<Koordinater>();
 	private  LinkedList<Skepp> skeppar = new LinkedList<Skepp>();
 	private LinkedList<Skepp> skeppar2 = new LinkedList<Skepp>();
-	private LinkedList<Skepp> skeppar3 = new LinkedList<Skepp>();
 	//private  LinkedList<Spelare> spelare = new LinkedList<Spelare>();
 	Spelplan plan = new Spelplan();
 	Scanner scan = new Scanner(System.in);
@@ -34,15 +31,17 @@ public class Spelare {
 	LinkedHashMap<Koordinater, Bitar> map2 = new LinkedHashMap<Koordinater, Bitar>();
 	LinkedList<Spelare> spelarLista = new LinkedList<Spelare>();
 	
-	public Spelare(int liv, String namn) {
+	public Spelare(int liv, String namn, int träffar, int totalLiv) {
 		this.liv = liv;
 		this.namn = namn;
+		this.träffar = träffar;
+		this.totalLiv = totalLiv;
 	}
 	
 	
 	public String skapaNamn(int x) {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("D�p spelare " + x);
+		System.out.println("Döp spelare " + x);
 		String namn = scan.nextLine();
 		return namn;
 	}
@@ -55,6 +54,20 @@ public class Spelare {
 			liv = liv + obj.getStorlek();
 		}
 		return liv;
+	}
+	
+	public int gettotalLiv() {
+		return totalLiv;
+	}
+	public void settotalLiv(int totalLiv) {
+		this.totalLiv = totalLiv;
+	}
+	
+	public int getTräffar() {
+		return träffar;
+	}
+	public void setTräffar(int träffar)  {
+		this.träffar = träffar;
 	}
 	
 	
@@ -88,20 +101,15 @@ public class Spelare {
 //		index++;
 	}
 	public void addKoordinat(Koordinater c) {
-		b�tKoordinater.add(c);
+		båtKoordinater.add(c);
 	}
 	
-	public void addSkepp2(Skepp c) {
-		skeppar2.add(c);
-	}
-	public void addSkepp3(Skepp c) {
-		skeppar3 = 
-	}
+
 	/**
 	 * public void skapaSkepp() {
 		Skepp skepp = new Skepp(lengd, namn);
-		System.out.println("H�r skapar du fler skepp!");
-		System.out.println("H�r kan du skapa ett skepp. Vilken storlek vill du ha?");
+		System.out.println("Här skapar du fler skepp!");
+		System.out.println("Här kan du skapa ett skepp. Vilken storlek vill du ha?");
 		int storlek2 = scan.nextInt();
 		skepp.setStorlek(storlek2);
 		scan.nextLine();
@@ -114,16 +122,16 @@ public class Spelare {
 	 */
 	
 	public void skapaSkepp() {	
-		System.out.println("Hur m�nga skepp vill du spela med?");
+		System.out.println("Hur många skepp vill du spela med?");
 		int antalskepp = scan.nextInt();
 		try {
 			
 			
 			if (antalskepp > 5) {
-				System.out.println("Kan inte ha fler �n 5 skepp - du f�r n�ja dig med 5");
+				System.out.println("Kan inte ha fler än 5 skepp - du får nöja dig med 5");
 				antalskepp = 5;
 			} else if (antalskepp < 0) {
-				System.out.println("Kan inte ha negativt antal - du f�r ett");
+				System.out.println("Kan inte ha negativt antal - du får ett");
 				antalskepp = 1;
 			}
 		} catch (InputMismatchException error) {
@@ -131,27 +139,25 @@ public class Spelare {
 		}
 		
 		for (int i = 0; i <= (antalskepp-1); i++) {
-			Skepp skepp = new Skepp(lengd, namn, b�tKoordinater);
-			System.out.println("H�r skapar du fler skepp!");
-			System.out.println("H�r kan du skapa ett skepp. Vilken storlek vill du ha?");
+			Skepp skepp = new Skepp(lengd, namn, båtKoordinater);
+			System.out.println("Här skapar du fler skepp!");
+			System.out.println("Här kan du skapa ett skepp. Vilken storlek vill du ha?");
 			int storlek2 = scan.nextInt();
 			while (storlek2 <1 || storlek2>10) {
-				System.out.println("B�ten har ej en giltlig storlek, v�lj om den: ");
+				System.out.println("Båten har ej en giltlig storlek, välj om den: ");
 				storlek2 = scan.nextInt();
 			}
 			skepp.setStorlek(storlek2);
-			// spelareLiv(storlek2);
+		//	spelareLiv(storlek2);
 			scan.nextLine();
 			System.out.println("Vad ska skeppet heta?");
 			String namn2 = scan.nextLine();
 			/*
-			 * for (int i=0; i<=storlek2; i++) { skepp.setb�tKoordinater(new
+			 * for (int i=0; i<=storlek2; i++) { skepp.setbåtKoordinater(new
 			 * Koordinater(skepp.getNamn()+i)); }
 			 */
 			skepp.setNamn(namn2);
 			addSkepp(skepp);
-		//	addSkepp2(skepp);
-		//	System.out.println(skeppar2);
 			printSkepp();
 		}
 	}
@@ -165,11 +171,11 @@ public class Spelare {
 	 */
 	
 	public String toString() {
-		if(this.b�tKoordinater==null) {
+		if(this.båtKoordinater==null) {
 			return ("Namn:" + this.namn + " Liv: " + this.liv + "\n");
 		}
 		else {
-			return this.b�tKoordinater.toString();
+			return this.båtKoordinater.toString();
 		}
 	}
 	
@@ -265,7 +271,7 @@ public class Spelare {
 	}
 
 	public boolean riktning() {
-		System.out.println("Ange h f�r horisontellt eller v f�r vertikalt: ");
+		System.out.println("Ange h för horisontellt eller v för vertikalt: ");
 		Scanner scan = new Scanner(System.in);
 		String val = scan.nextLine();
 		if (val.equals("h")) {
@@ -275,7 +281,7 @@ public class Spelare {
 		}
 	}
 	public boolean riktning2() {
-		System.out.println("Ange h f�r horisontellt eller v f�r vertikalt: ");
+		System.out.println("Ange h för horisontellt eller v för vertikalt: ");
 		Random f = new Random(); 
 		int a = f.nextInt(2);
 		
@@ -292,14 +298,14 @@ public class Spelare {
 	public int markeraSkott(boolean c , boolean d, boolean e, Koordinater replaceCoords) {
         char hashtag = '#';
         char miss = '0';
-        char tr�ff = '1';
+        char träff = '1';
         int x = 0;
         Bitar boatpiece = new Bitar(hashtag);
         Bitar boatpiece2 = new Bitar(miss);
-        Bitar boatpiece3 = new Bitar(tr�ff);
+        Bitar boatpiece3 = new Bitar(träff);
         
 		if (c == true) {
-			System.out.println("Du tr�ffade!");
+			System.out.println("Du träffade!");
 			map.put(replaceCoords, boatpiece3);
 			map2.put(replaceCoords, boatpiece3);
 			x = 1;
@@ -315,7 +321,7 @@ public class Spelare {
 		}
 		
 		if (e == true) {
-			System.out.println("Du har redan skjutit h�r. Skjut igen");
+			System.out.println("Du har redan skjutit här. Skjut igen");
 			String koordinater = scan.nextLine();
 			skjutSkepp(koordinater);
 			x = 0;
@@ -330,14 +336,14 @@ public class Spelare {
 		
         char hashtag = '#';
         char miss = '0';
-        char tr�ff = '1';
+        char träff = '1';
         int x = 0;
         Bitar boatpiece = new Bitar(hashtag);
         Bitar boatpiece2 = new Bitar(miss);
-        Bitar boatpiece3 = new Bitar(tr�ff);
+        Bitar boatpiece3 = new Bitar(träff);
         
 		if (c == true) {
-			System.out.println("Du tr�ffade!");
+			System.out.println("Du träffade!");
 			map.put(replaceCoords, boatpiece3);
 			map2.put(replaceCoords, boatpiece3);
 			x = 1;
@@ -354,7 +360,7 @@ public class Spelare {
 		
 		if (e == true) {
 			
-			System.out.println("Du har redan skjutit h�r. Skjut igen");
+			System.out.println("Du har redan skjutit här. Skjut igen");
 			//Random r = new Random();
 			//char xko = (char)(r.nextInt(10) + 'A');
 			//Random f = new Random(); 
@@ -393,7 +399,7 @@ public class Spelare {
 	
 	/**
 	 * public boolean slaktatSkepp() {
-		if (skeppKoordinater.equals(tr�ffadeKoordinater)) {
+		if (skeppKoordinater.equals(träffadeKoordinater)) {
 			return true;
 		}
 		else {
@@ -404,14 +410,14 @@ public class Spelare {
 	}
 	 * @return
 	 */
-	public boolean slaktatSkepp(LinkedList<Koordinater> tr�ffadeKoordinater) {
+	public boolean slaktatSkepp(LinkedList<Koordinater> träffadeKoordinater) {
 		boolean x = false;
 		for (Skepp obj : skeppar2) {
-			if (obj.toString().equals(tr�ffadeKoordinater.toString())) {
+			if (obj.toString().equals(träffadeKoordinater.toString())) {
 				x = true;
-				//System.out.println("B�t ska ha blivit tr�ffad");
+				//System.out.println("Båt ska ha blivit träffad");
 				break;
-	//			clearKoordinater(tr�ffadeKoordinater);
+	//			clearKoordinater(träffadeKoordinater);
 			}
 			else {
 				x = false;
@@ -419,9 +425,9 @@ public class Spelare {
 		}
 		return x;
 	}
-	public LinkedList<Koordinater> clearKoordinater(LinkedList<Koordinater> tr�ffadeKoordinater) {
-		tr�ffadeKoordinater.clear();
-		return tr�ffadeKoordinater;
+	public LinkedList<Koordinater> clearKoordinater(LinkedList<Koordinater> träffadeKoordinater) {
+		träffadeKoordinater.clear();
+		return träffadeKoordinater;
 	}
 	
 	
@@ -433,10 +439,10 @@ public class Spelare {
 			if (kollaNyckel.equals(obj.toString())) {
 				System.out.println("hejeheeheejhsaheahseh");
 				System.out.println(obj);
-				tr�ffadeKoordinater.add(obj);
+				träffadeKoordinater.add(obj);
 				System.out.println(skeppKoordinater);
 				if (slaktatSkepp() == true ){
-					System.out.println("b�t " + skeppKoordinater.indexOf(obj) + " �r s�nkt");
+					System.out.println("båt " + skeppKoordinater.indexOf(obj) + " Är sänkt");
 				}				
 			}
 		}
@@ -446,17 +452,17 @@ public class Spelare {
 	
 	public void kollaSkepp(String kollaNyckel) {
 		for(Skepp obj : skeppar2) {
-			//System.out.println("hall��������������������");
+			//System.out.println("hallåååååååååååååååååååå");
 			//System.out.println(obj.toString());
 			//if(yLed== obj.toString().charAt(0) && xLed == obj.toString().charAt(1)) {
 			if (obj.toString().contains(kollaNyckel)) {
 				//System.out.println("hejeheeheejhsaheahseh");
-				tr�ffadeKoordinater.add(new Koordinater(kollaNyckel));
-				//System.out.println(tr�ffadeKoordinater);
-				if (slaktatSkepp(tr�ffadeKoordinater) == true ){
-					System.out.println("B�t "+obj.getNamn()+" �r s�nkt");
-					clearKoordinater(tr�ffadeKoordinater);
-				//	System.out.println(tr�ffadeKoordinater+ "rensade Koordinater");
+				träffadeKoordinater.add(new Koordinater(kollaNyckel));
+				//System.out.println(träffadeKoordinater);
+				if (slaktatSkepp(träffadeKoordinater) == true ){
+					System.out.println("Båt "+obj.getNamn()+" Är sänkt");
+					clearKoordinater(träffadeKoordinater);
+				//	System.out.println(träffadeKoordinater+ "rensade Koordinater");
 				}			
 			}
 		}
@@ -474,7 +480,7 @@ public class Spelare {
             	Koordinater replaceCoords = new Koordinater(kollaNyckel);
             	
             	if(lookup(nycklar).toString().contains("#")) {
-            	//	System.out.println("Du tr�ffade!");
+            	//	System.out.println("Du träffade!");
             		//map.put(replaceCoords, boatpiece3);
             		boolean c = true;
             		boolean d = false;
@@ -515,7 +521,7 @@ public class Spelare {
         int x = 0;
         char hashtag = '#';
         char miss = '0';
-        char tr�ff = '1';
+        char träff = '1';
         
         boolean miss1 = true;
         boolean hit1 = true;
@@ -523,7 +529,7 @@ public class Spelare {
         
         Bitar boatpiece = new Bitar(hashtag);
         Bitar boatpiece2 = new Bitar(miss);
-        Bitar boatpiece3 = new Bitar(tr�ff);
+        Bitar boatpiece3 = new Bitar(träff);
         
         for (Koordinater nycklar : map.keySet()) {
             String kollaNyckel = "" + yLed + xLed;
@@ -532,7 +538,7 @@ public class Spelare {
             	Koordinater replaceCoords = new Koordinater(kollaNyckel);
             	
             	if(lookup(nycklar).toString().contains("#")) {
-            	//	System.out.println("Du tr�ffade!");
+            	//	System.out.println("Du träffade!");
             		//map.put(replaceCoords, boatpiece3);
             		boolean c = true;
             		boolean d = false;
@@ -567,7 +573,7 @@ public class Spelare {
 
     }
 	public void printKoordinater() {
-		for (Koordinater obj : b�tKoordinater) {
+		for (Koordinater obj : båtKoordinater) {
 			System.out.println(obj);
 		}
 	}
@@ -589,7 +595,7 @@ public class Spelare {
 		
 		if (val == true) {
 			if (xLed + storlek -48 > 10) {
-				System.out.println("B�ten �r f�r stor");
+				System.out.println("Båten är för stor");
 				return false;
 			}
 			for (Koordinater nycklar : map.keySet()) {
@@ -597,7 +603,7 @@ public class Spelare {
 				System.out.println(kollaYled);
 				if (kollaYled.equals(nycklar.toString())) {
 					if (lookup(nycklar).toString().contains("#")) {
-						System.out.println("Du har n�rliggande b�tar. B�tarna m�ste ha minst 1 ruta emellan varandra");
+						System.out.println("Du har närliggande båtar. Båtarna måste ha minst 1 ruta emellan varandra");
 						return false;
 					}
 					xBak++;
@@ -651,8 +657,8 @@ public class Spelare {
 	}
 
 	public void addBoat(String koordinater, boolean riktning, int storlek,Skepp obj, String namn) {
-	//	LinkedList<Koordinater> b�tKoordinater = new LinkedList<Koordinater>();
-		List<Koordinater>b�tKoordinater = new ArrayList<Koordinater>();
+	//	LinkedList<Koordinater> båtKoordinater = new LinkedList<Koordinater>();
+		List<Koordinater>båtKoordinater = new ArrayList<Koordinater>();
 		char yLed = koordinater.charAt(0);
 		int xLed = koordinater.charAt(1);
 		char hashtag = '#';
@@ -672,7 +678,7 @@ public class Spelare {
 						Koordinater replaceCoords = new Koordinater(kollaNycklar);
 						map.put(replaceCoords, boatPiece);
 						//skeppKoordinater.add(new Koordinater(kollaNycklar));
-						b�tKoordinater.add(new Koordinater(kollaNycklar));
+						båtKoordinater.add(new Koordinater(kollaNycklar));
 						xLed++;
 					}
 					
@@ -694,7 +700,7 @@ public class Spelare {
 				if((kollaNycklar.charAt(0) == yLed) && (nycklar.toString().charAt(1) == xLed)) {
 					Koordinater replaceCoords = new Koordinater(kollaNycklar);
 					map.put(replaceCoords, boatPiece);
-					b�tKoordinater.add(new Koordinater(kollaNycklar));
+					båtKoordinater.add(new Koordinater(kollaNycklar));
 					//skeppKoordinater.add(new Koordinater(kollaNycklar));
 					yLed++;
 					lengthCounter++;
@@ -704,11 +710,11 @@ public class Spelare {
 			}
 		
 		}
-		//skeppar.add(new Skepp(storlek,namn,b�tKoordinater));
+		//skeppar.add(new Skepp(storlek,namn,båtKoordinater));
 	//	System.out.println(skeppar);
 		
 		//System.out.println(skeppKoordinater);
-		skeppar2.add(new Skepp(storlek,namn,b�tKoordinater));
+		skeppar2.add(new Skepp(storlek,namn,båtKoordinater));
 		System.out.println(skeppar2);	
 		
 	}
